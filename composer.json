@@ -1,0 +1,15 @@
+{
+  "name": "aquajo/facebook-event-scraper",
+  "description": "A simple scraper for events.",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "FacebookEventScraper\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "guzzlehttp/guzzle": "^7.0"
+  }
+}
