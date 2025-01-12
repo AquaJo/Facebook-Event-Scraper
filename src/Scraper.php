@@ -2,8 +2,8 @@
 
 namespace FacebookEventScraper;
 
-require_once __DIR__ . '/Helpers/network.php';
-require_once __DIR__ . '/Helpers/htmlParser.php';
+require_once __DIR__ . '/helpers/network.php';
+require_once __DIR__ . '/helpers/htmlParser.php';
 
 class Scraper
 {
