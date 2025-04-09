@@ -1,5 +1,5 @@
 <?php
-
+// event-page
 function findJsonInString(string $dataString, string $key, ?callable $isDesiredValue = null): array
 {
     $prefix = '"' . $key . '":';
@@ -65,7 +65,7 @@ function getDescription($html)
     return $jsonData['text'];
 }
 
-function getBasicData($html)
+function extractEventData($html)
 {
     $jsonData = findJsonInString($html, 'event', function ($candidate) {
         return isset($candidate['day_time_sentence']);
@@ -212,4 +212,22 @@ function getEndTimestampAndTimezone($html, $expectedStartTimestamp)
         'endTimestamp' => $jsonData['end_timestamp'] ?: null,
         'timezone' => $jsonData['tz_display_name']
     ];
+}
+
+
+
+
+
+
+// oraganizer-events-page
+function extractEventIds($html): array
+{
+    $jsonData = findJsonInString($html, 'pageItems')['jsonData']['edges'];
+
+    if ($jsonData) {
+        return array_map(function ($edge) {
+            return $edge['node']['node']['id'];
+        }, $jsonData);
+    }
+    return [];
 }

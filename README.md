@@ -16,8 +16,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use FacebookEventScraper\Scraper;
 
+// scrape single event - details
 $scraper = new Scraper();
-$result = $scraper->scrapeEvent('https://www.facebook.com/events/1830273880516670');
+$specificEventDetails = $scraper->scrapeEvent('1830273880516670'); // or use 'https://www.facebook.com/events/1830273880516670'
+print_r($specificEventDetails);
 
-print_r($result);
+// scrape events by organizer (8 most recent)
+$organizerEvents = $scraper->scrapeEvents('github'); // or use 'https://www.facebook.com/GitHub/events/'
+print_r($organizerEvents); // [id1, id2, ..., id8]
 ```

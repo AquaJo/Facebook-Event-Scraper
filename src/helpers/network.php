@@ -3,7 +3,7 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-function fetchEvent($url, $proxy = null)
+function fetchWithGuzzle($url, $proxy = null)
 {
     // Initialize the Guzzle client
     $client = new Client();

@@ -7,13 +7,18 @@ require_once __DIR__ . '/helpers/htmlParser.php';
 
 class Scraper
 {
-    public static function scrapeEvent($urlFromUser, $options = [])
+    /*
+    * @param string $urlFromUser
+    * @param array $options
+    * @return array
+    */
+    public static function scrapeEvent($urlFromUser, $options = []): array
     {
         if (!filter_var($urlFromUser, FILTER_VALIDATE_URL)) {
             $urlFromUser = 'https://www.facebook.com/events/' . $urlFromUser;
         }
-        $dataString = fetchEvent($urlFromUser, $options['proxy'] ?? null);
-        $basicData = getBasicData($dataString);
+        $dataString = fetchWithGuzzle($urlFromUser, $options['proxy'] ?? null);
+        $basicData = extractEventData($dataString);
         $id = $basicData['id'];
         $name = $basicData['name'];
         $photo = $basicData['photo'];
@@ -58,5 +63,24 @@ class Scraper
             'parentEvent' => $parentEvent,
             'usersResponded' => $usersResponded,
         ];
+    }
+
+
+    /*
+    * @param string $urlFromUser
+    * @param array $options
+    * @return array - array of event ids, the first 8, most recent
+    */
+    public static function scrapeEvents($urlFromUser, $options = []): array
+    {
+        if (!filter_var($urlFromUser, FILTER_VALIDATE_URL)) {
+            $urlFromUser = 'https://www.facebook.com/' . $urlFromUser . '/events';
+        }
+
+        $dataString = fetchWithGuzzle($urlFromUser, $options['proxy'] ?? null);
+
+        $eventsIds = extractEventIds($dataString);
+
+        return $eventsIds;
     }
 }
